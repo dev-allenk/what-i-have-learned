@@ -104,7 +104,7 @@ const useCalculateWithMemo = numberProp => {
 
 #### useMemo 실행화면
 
-![withMemo](/Users/revk/Documents/withMemo.gif)
+![withMemo](https://raw.githubusercontent.com/revlanc/etc/master/useMemo_useEffect/withMemo.gif?token=AKHK67DJ2NWJAGMN6K7NN7C5QYJ7I)
 
 코드를 실행해보면 위와 같은 모습을 볼 수 있는데요,  
 num값이 변경될 때마다 App컴포넌트도 1번씩 렌더링되는 것을 볼 수 있어요.  
@@ -156,7 +156,7 @@ const useCalculate = numberProp => {
 
 #### useEffect 실행화면
 
-![withoutMemo](/Users/revk/Documents/withoutMemo.gif)
+![withoutMemo](https://raw.githubusercontent.com/revlanc/etc/master/useMemo_useEffect/withoutMemo.gif?token=AKHK67DIOEGKP6C7U2TBL325QYKBY)
 
 코드를 실행해보면 위와 같은 모습이에요.  
 num값이 변경될 때마다 App컴포넌트가 2번씩 렌더링되는걸 확인할 수 있어요.
@@ -251,7 +251,7 @@ countWithMemo는 todoData가 변경될 때만 새로운 값으로 바뀌어요.
 
 #### useEffect 실행화면
 
-![useMemo예제](/Users/revk/Documents/useMemo예제.gif)
+![useMemo예제](https://raw.githubusercontent.com/revlanc/etc/master/useMemo_useEffect/useMemo%EC%98%88%EC%A0%9C.gif?token=AKHK67EDBIPASPNC7UCQ3BS5QYKDW)
 
 DisplayOne컴포넌트는 불필요한 렌더링이 되지 않네요!
 
