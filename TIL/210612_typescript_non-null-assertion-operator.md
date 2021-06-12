@@ -10,7 +10,7 @@ let a: string | number;
 
 a!.toString() //don't
 
-if(a !== null || a !== undefined) {
+if(a !== null && a !== undefined) {
   a.toString() //do
 }
 ```
