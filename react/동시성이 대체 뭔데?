@@ -1,0 +1,18 @@
+[원문 링크](https://velog.io/@sehyunny/how-react-18-improves-app-perf?utm_source=substack&utm_medium=email)
+
+## 동시성의 정체
+
+18버전 이전의 리액트는 렌더링이 일단 시작하면 끝날 때까지 멈출 수 없었음.  
+하지만 18버전 이후의 리액트는 특정 렌더링이 급하지 않다고 표시할 수 있게 됨.  
+리액트는 5ms 마다 다른 급한 작업이 없는지 확인하고, 더 급한 작업이 있다면 렌더링을 멈추고 급한 작업을 처리하도록 메인 스레드를 비워줌.  
+기존에는 급한 작업을 '동시에' 처리할 수 없었지만 이제는 '동시에' 처리하게 됨.(엄밀히는 싱글스레드이므로 동시는 아니지만)  
+
+
+## useTransition과 useDeferredValue
+
+동시성은 리액트가 자동으로 하는건 아니고 useTransition과 useDeferredValue 를 활용해 지원할 수 있음.  
+둘 다 어떤 함수/값의 업데이트가 급하지 않음을 표시하는 수단.  
+useTransition은 렌더링 지연을 발생시키는 원인(함수의 시작) 자체에 접근가능할 때 사용하면 좋고,  
+useDeferredValue는 원인에는 접근이 어렵고 렌더링 지연을 발생시키는 값을 사용하는 쪽에서 사용하기 좋다.  
+즉, useTransition의 사용을 우선으로 고려하고, 그게 어려우면 useDeferredValue를 사용하면 됨.  
+
