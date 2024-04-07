@@ -36,6 +36,7 @@ class PaymentMethod {
   }
 
   get label() {
+    // 문제: 어떤 곳에선 Pay in cash라고 노출하고, 어떤 곳에선 Cash 라고만 노출한다면?
     if (this.provider === "cash") {
       return `Pay in ${this.provider}`
     }
@@ -53,6 +54,7 @@ class PaymentMethod {
 - 네트워크 요청 및 도메인 객체로 변환
 
 ```typescript
+// src/domain/getPaymentMethods.ts
 const fetchPaymentMethods = async () => {
   const response = await fetch("https://5a2f495fa871f00012678d70.mockapi.io/api/payment-methods?countryCode=AU")
   const methods: RemotePaymentMethod[] = await response.json()
@@ -86,6 +88,19 @@ export const usePaymentMethods = () => {
 
   return {
     paymentMethods,
+  }
+}
+
+// tanstack-query를 사용한다면
+export const usePaymentMethods = () => {
+  const { data, isLoading } = useQuery<PaymentMethod[]>({
+    queryKey: ["paymentMethods"],
+    queryFn: fetchPaymentMethods,
+  })
+
+  return {
+    isLoading,
+    data: paymentMethods,
   }
 }
 ```
