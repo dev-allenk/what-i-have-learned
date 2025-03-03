@@ -1,13 +1,13 @@
 # [Talks at Google] A Philosophy of Software design
 
-## Course
-1. Phase 1
-  a. 3주간 2~3천 줄 정도 규모의 시스템을 구현
-2. Phase 2
-  a. 코드 리뷰를 진행
-  b. 코드 리뷰를 바탕으로 수정
-3. Phase 3
-  a. 다른 시스템을 새롭게 구현
+## Course - 각 페이즈는 3주간 진행
+1. Phase 1  
+  a. 2~3천 줄 정도 규모의 시스템을 구현  
+2. Phase 2  
+  a. 코드 리뷰를 진행  
+  b. 코드 리뷰를 바탕으로 수정  
+3. Phase 3  
+  a. 다른 시스템을 새롭게 구현  
 
 ## The Magic Secrets
 ### Principles
@@ -38,7 +38,46 @@
 shallow class는 복잡성에 비해 별로 이득을 가져다주지 않는다.  
 인터페이스가 지나치게 복잡하거나, 효용이 적거나, 아니면 둘 다인 때도 있다.  
 최악은 클래스가 전체 시스템을 더 복잡하게 만드는 경우다.  
+세부 구현을 조금만 바꾸더라도 인터페이스를 바꾸어야 할 확률이 높은 경우 shallow class에 가깝다.  
 
 deep class는 복잡하지 않으면서 많은 이득을 제공한다.  
 인터페이스는 단순하고, 얻는 효용은 크다.  
 이를 잘 추상화되었다고 말한다.  
+
+shallow class를 전부 없앨 수는 없다.  
+하지만 shallow class가 복잡성을 줄이는데에 도움이 되지 않는다는 사실을 기억해야 한다.  
+너무 많은 shallow class가 문제가 되는 경우가 많다.  
+함수를 작게 유지하는 것에만 몰두해서 그렇다.  
+
+### Don't - 1
+```java
+private void addNullValueForAttribute(String attribute) {
+  data.put(attribute, null)
+}
+```
+
+### Don't - 2
+```java
+// 파일 하나 읽기 위해 3개의 클래스를 사용. 시스템에 비용이 부과됨
+FileInputStream fileStream = new FileInputStream(fileName);
+BufferedInputStream bufferedStream = new BufferedInputStream(fileStream);
+ObjectInputStream objectStream = new ObjectInputStream(bufferedStream);
+```
+
+### Do - Unix file I/O
+```c++
+int open(const char* path, int flags, mode_t permissions);
+int close(int fd);
+ssize_t read(int fd, void* buffer, size_t count);
+ssize_t write(int fd, const void* buffer, size_t count);
+off_t lseek(int fd, off_t offset, int referencePosition);
+```
+- 인터페이스 아래에 숨겨져있는 것
+  - On-disk representation, disk block allocation
+  - Directory management, path lookup
+  - Permission management
+  - Disk scheduling
+  - Block caching
+  - Deivce independence
+ 
+## 2. Define errors out of existence 
